@@ -3,10 +3,10 @@
 
         <Searchbar @search="getResults"/>
 
-
-        <div class="cards-media">
-            <Media :type="mediaType" v-for="(item, index) in media" :key="index"/>
+        <div v-if="!emptyKey" class="cards-media">
+            <Media :type="mediaType" v-for="(item, index) in media" :key="index" :media-data="item"/>
         </div>
+        <div v-else>La chiave di ricerca non può essere vuota</div>
   </main>
 </template>
 
@@ -29,12 +29,18 @@
                 mediaType: "movie",
                 authKey: "e7f8c131c7e047b16f4fcfd95ffecae2",
                 loading: true,
+                emptyKey: false,
             }
         },
         methods: {
             getResults(searchKey, lang="it-IT") {
-    
+                
                 console.log("searchKey", searchKey);
+                if (!searchKey){ 
+                    this.emptyKey = true;
+                    return;
+                }
+
                 axios
                     .get(this.apiURLBase + "/"+this.mediaType, 
                     {
@@ -47,6 +53,7 @@
                     })
                     .then((success) => {
                         this.media = success.data.results;
+                        console.log("media", this.media);
                         this.loading = false;
 
                     })
