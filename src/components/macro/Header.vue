@@ -2,10 +2,12 @@
   <header>
       <div class="container">
 
-        <div class="main-logo">
-            <img src="https://gogomagazine.it/wp-content/uploads/2020/01/cinema-4153289_640-560x412.jpg" alt="">
-        </div>
-        <h3>Boolflix</h3>
+        <a href="#">
+            <div class="main-logo">
+                <img src="https://gogomagazine.it/wp-content/uploads/2020/01/cinema-4153289_640-560x412.jpg" alt="">
+            </div>
+            <h3>Boolflix</h3>
+        </a>
       </div>
   </header>
 </template>
@@ -32,6 +34,11 @@
             align-items: center; 
         }
 
+        a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
         .main-logo {
             height: 100%;
             padding: 10px;
@@ -40,11 +47,10 @@
                 height:100%;
                 width: 80px;
                 border-radius: 10px;
-                
             }
         }
         h3 {
-            color: maroon;
+            color: rgb(153, 0, 0);
             text-transform: uppercase;
         }
         

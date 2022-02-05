@@ -2,7 +2,7 @@
   
     <div class="searchbar">
 
-        <input type="text" class="title" v-model.trim="inputValue" placeholder="Cerca film">
+        <input type="text" class="title" v-model.trim="inputValue" placeholder="titolo del media">
         <button type="submit" @click="$emit('search', inputValue)">Cerca</button>
     </div>
 </template>
