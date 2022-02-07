@@ -8,13 +8,26 @@
             </div>
             <h3>Boolflix</h3>
         </a>
+
+        <Searchbar @search="propagateEvent"/>
       </div>
   </header>
 </template>
 
 <script>
+
+    import Searchbar from "../commons/Searchbar.vue";
+
     export default {
         name: 'Header',
+        components: {
+            Searchbar,
+        },
+        methods: {
+            propagateEvent(inputValue){
+                this.$emit('listen_search', inputValue);
+            }
+        }
     }
 </script>
 
@@ -30,8 +43,9 @@
 
         .container {
             display: flex;
-            justify-content: flex-start;
-            align-items: center; 
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30% 0 2rem; 
         }
 
         a {

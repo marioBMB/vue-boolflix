@@ -1,115 +1,42 @@
 <template>
-  <main>
-
-        <Searchbar @search="getResults"/>
+    <main>
 
         <h3>{{message}}</h3>
-        <div v-if="!emptyKey" class="cards-container">
-            <Media type='movie' :media-data="media.movie[0]" title="Film"/>
-            <Media type='tv' :media-data="media.tv[0]" title="Serie Tv"/>
+        <div v-if="searchkey != ''" class="cards-container">
+            <Media type='movie' :mediadata="datalist.movie[0]" title="Film" :imgsrc="baseimgURL" />
+            <Media type='tv' :mediadata="datalist.tv[0]" title="Serie Tv" :imgsrc="baseimgURL" />
         </div>
         <div v-else>La chiave di ricerca non può essere vuota</div>
-  </main>
+    </main>
 </template>
 
 <script>
-
-    import axios from 'axios';
-    import Searchbar from "../commons/Searchbar.vue";
     import Media from "../commons/Media.vue";
 
     export default {
         name: "Main",
         components: {
-            Searchbar,
             Media,
+        },
+        props: {
+            datalist: Object,
+            searchkey: String
         },
         data() {
             return {
-                media: {
-                    movie: [],
-                    tv: [],
-                },
-                apiURLBase: "https://api.themoviedb.org/3/search",
-                authKey: "e7f8c131c7e047b16f4fcfd95ffecae2",
+                movies: [],
+                tvseries: [],
                 loading: true,
-                emptyKey: false,
                 message: "",
-                mediaCounter: 0,
+                baseimgURL: "https://image.tmdb.org/t/p/w342",
             }
-        },
-        computed:{
         },
         methods: {
-
-            getResults(searchKey) {
-
-                this.media = {
-                    movie: [],
-                    tv: [],
-                };
-                this.searchMedia(searchKey, "movie");
-                this.searchMedia(searchKey, "tv");
-
-                console.log(this.media.movie);
-                console.log(this.media.tv);
-
-            },
-            searchMedia(searchKey, mediaType, lang="it-IT") {
-
-                console.log("searchKey",searchKey)
-                console.log("mediaType",mediaType)
-                console.log("lang",lang)
-
-                
-                if (!searchKey) { this.emptyKey = true; return; }  
-                
-                axios
-                    .get(this.apiURLBase + "/"+ mediaType, 
-                    {
-                        params: {
-                            api_key: this.authKey,
-                            query: searchKey,
-                            lang: lang,
-                            include_adult: false,
-                        }
-                    })
-                    .then((success) => {    
-
-                        this.mediaCounter++;
-                        this.media[mediaType].push(success.data.results);
-                        if (mediaType == 'tv'){
-                            this.formatFields(mediaType);
-                        }
-
-                        if (this.mediaCounter == Object.keys(this.media).length){
-                            this.loading = false;
-                            this.message = "Risultati di ricerca:";
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);                        
-                    })                                    
-            },
-
-            formatFields(mediaType){
-
-                const arrayModObj = [];
-
-                this.media[mediaType][0].forEach((elem) => {
-                    const objApp = {
-                        title: elem.name,
-                        original_title: elem.original_name,
-                        language: elem.language,
-                        vote_average: elem.vote_average,
-                    };
-                    arrayModObj.push(objApp);
-                });
-                this.media[mediaType][0] = arrayModObj;
-            }
           
         },
-
+        updated() {
+            console.log("datalist", this.datalist);
+        }
     }
 </script>
 
