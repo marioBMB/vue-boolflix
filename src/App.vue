@@ -67,7 +67,7 @@
 
                       this.mediaCounter++;
                       this.media[mediaType].push(success.data.results);
-                      mediaType == 'tv'? this.formatFields(mediaType) : null;
+                      mediaType == 'tv'? this.formatTvFields() : null;
 
                       console.log("media", this.media);
 
@@ -82,20 +82,15 @@
                       console.log(error);                        
                   });                                 
       },
-      formatFields(mediaType){
+      formatTvFields(){
 
-          const arrayModObj = [];
+          this.media.tv[0].forEach((elem, index) => {
 
-          this.media[mediaType][0].forEach((elem) => {
-              const objApp = {
-                  title: elem.name,
-                  original_title: elem.original_name,
-                  language: elem.language,
-                  vote_average: elem.vote_average,
-              };
-              arrayModObj.push(objApp);
+            elem.title = elem.name;
+              elem.original_title = elem.original_name;
+            console.log("elem", elem);
+            console.log("index", this.media.tv[0][index]);
           });
-          this.media[mediaType][0] = arrayModObj;
       }
     },
 }

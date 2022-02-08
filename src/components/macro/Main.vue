@@ -49,15 +49,16 @@
         justify-content: center;
 
 
-        .media {
-
-            list-style: none;
+        .card.media {
+            
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
             margin: 20px;
+            list-style: none;
             border: 1px solid #555;
-
             width: 200px;
-            height: 200px;
-            padding: 10px 20px;
+            height: 300px;
             overflow-y: auto;
 
             font-size: 0.8rem;
